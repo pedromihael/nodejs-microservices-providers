@@ -5,7 +5,7 @@ const apiErrorFactory = ApiErrorFactory()
 function GetProviderByNameUseCase(repository) {
   const execute = async id => {
     if (id) {
-      const response = await repository.findByName(id)
+      const response = await repository.findByName(name)
       return response
     } else {
       return apiErrorFactory.createError(

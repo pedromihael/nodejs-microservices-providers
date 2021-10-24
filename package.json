@@ -16,9 +16,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pedromihael/nodejs-microservices-incidents/issues"
+    "url": "https://github.com/pedromihael/nodejs-microservices-providers/issues"
   },
-  "homepage": "https://github.com/pedromihael/nodejs-microservices-incidents#readme",
+  "homepage": "https://github.com/pedromihael/nodejs-microservices-providers#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
