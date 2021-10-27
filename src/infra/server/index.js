@@ -2,7 +2,8 @@ const express = require('express')
 const logger = require('morgan')
 const dotenv = require('dotenv')
 const cors = require('cors')
-const { consumer, topic } = require('../../application/client/modules/project/infra/kafka/consumers')
+const { consumer, topic } = require('../../application/client/modules/provider/infra/kafka/consumers')
+const { UpdateProviderReliability } = require('../../application/client/modules/provider/infra/kafka/actions/UpdateProviderReliability')
 const routes = require('../../application/client/modules/provider/infra/http/routes')
 
 dotenv.config()
@@ -30,15 +31,19 @@ const run = async () => {
   await consumer.subscribe({ topic })
 
   await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
-      console.log(`- ${prefix} ${message.key}#${message.value}`)
+    eachMessage: async ({ message }) => {
 
-      const payload = message.value;
+      const payload = { value: `${message.value}` }
 
-      console.log('payload', payload)
+      const provider = payload.value.split("::")[0]
+      const severity = payload.value.split("::")[1]
 
-      // atualizar reliability do provider
+      const updateProviderReliability = UpdateProviderReliability()
+      const res = await updateProviderReliability.execute(provider, severity)
+
+      if (res) {
+        console.log("new reliability value: ", res.newValue)
+      }
     },
   })
 }
