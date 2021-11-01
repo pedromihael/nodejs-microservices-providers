@@ -40,10 +40,6 @@ const run = async () => {
 
       const updateProviderReliability = UpdateProviderReliability()
       const res = await updateProviderReliability.execute(provider, severity)
-
-      if (res) {
-        console.log("new reliability value: ", res.newValue)
-      }
     },
   })
 }
